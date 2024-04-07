@@ -5,7 +5,7 @@ const { cover, profilePic, username, title, collectionId, userId } = Astro.props
 const fullUrl = `https://rmperso-pb.fly.dev/api/files/${collectionId}/${userId}/`
 ---
 
-<div class="header--grid-container" *ngIf="$bio | async as bio">
+<div class="header--grid-container">
   <div class="header--img">
     <img src=`${fullUrl}${cover}` alt="">
   </div>
