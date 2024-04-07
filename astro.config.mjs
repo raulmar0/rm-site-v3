@@ -5,5 +5,6 @@ export default defineConfig({
   output: 'static',
   redirects: {
     '/': '/projects',
-  }
+  },
+  trailingSlash: "ignore"
 });
