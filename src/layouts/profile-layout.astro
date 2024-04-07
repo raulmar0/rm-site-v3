@@ -13,42 +13,34 @@ const user = data.items[0];
 const currentYear = new Date().getFullYear();
 
 ---
-
-<div #container class="container">
-  <div class="profile">
-    <TopBar/>
-    <Header cover={user.cover_img} profilePic={user.profile_img} username={user.username} title={user.job_title} collectionId={user.collectionId} userId={user.id}/>
-    <Bio description={user.bio} location={user.location} link={user.link} experience={user.experience}/>
-  </div>
-  <div class="vertical-divider"></div>
-  <div class="content">
-    <Nav tabs={tabs}/>
-    <div class="projects--grid-container">
-      <slot/>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/ola.png" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>raulmar</title>
+	</head>
+	<body>
+    <div #container class="container">
+      <div class="profile">
+        <TopBar/>
+        <Header cover={user.cover_img} profilePic={user.profile_img} username={user.username} title={user.job_title} collectionId={user.collectionId} userId={user.id}/>
+        <Bio description={user.bio} location={user.location} link={user.link} experience={user.experience}/>
+      </div>
+      <div class="vertical-divider"></div>
+      <div class="content">
+        <Nav tabs={tabs}/>
+        <div class="projects--grid-container">
+          <slot/>
+        </div>
+        <Footer>
+          { currentYear }
+        </Footer>
+      </div>
     </div>
-    <Footer>
-      { currentYear }
-    </Footer>
-  </div>
-</div>
-
-<!-- 
-<div (scroll)="onContentScroll($event)" #container class="container" *ngIf="$ready | async">
-  <div class="profile">
-    <rm-top-bar/>
-    <rm-header  />
-    <rm-bio  />
-  </div>
-  <div class="vertical-divider"></div>
-  <div #content (scroll)="onContentScroll($event)" class="content">
-    <rm-nav/>
-    <router-outlet></router-outlet>
-    <rm-footer  ></rm-footer>
-  </div>
-</div>
-<div *ngIf="showBackToTop" (click)="onBackToTopClick()" class="back-to-top">
-  <i class="fa-solid fa-chevron-up"></i>
-</div> -->
+	</body>
+</html>
 
 <style is:global>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');

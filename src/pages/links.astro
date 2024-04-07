@@ -9,31 +9,22 @@ console.log(links);
 
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-    <link rel="stylesheet" href="/assets/fontawesome/css/all.min.css">
-		<title>Astro</title>
-	</head>
-	<body>
 
-		<ProfileLayout>
-      <div class="links-container">
-        {
-          links.map((link: any) => (
-            <a href={link.url} class="link">
-              <i class={link.faIconClass}></i>
-              <span>{link.name}</span>
-            </a>
-          ))
-        }
-      </div>
-    </ProfileLayout>
-	</body>
-</html>
+	<head>
+    <link rel="stylesheet" href="/assets/fontawesome/css/all.min.css">
+	</head>
+  <ProfileLayout>
+    <div class="links-container">
+      {
+        links.map((link: any) => (
+          <a href={link.url} class="link">
+            <i class={link.faIconClass}></i>
+            <span>{link.name}</span>
+          </a>
+        ))
+      }
+    </div>
+  </ProfileLayout>
 
 <style>
 
