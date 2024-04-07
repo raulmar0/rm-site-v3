@@ -1,7 +1,14 @@
 ---
 const { tabs } = Astro.props;
 
+
+// const urlResult = Astro.url.pathname.match(/\/([^\/]+)$/);
+// const currentUrl = urlResult ? urlResult[1] : null;
+// console.log(Astro.url.pathname);
+// console.log(currentUrl);
+
 const currentUrl = Astro.url.pathname;
+console.log('currentUrl', currentUrl);
 
 ---
 
