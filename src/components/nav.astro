@@ -9,6 +9,7 @@ const { tabs } = Astro.props;
 
 const currentUrl = Astro.url.pathname;
 console.log('currentUrl', currentUrl);
+console.log('tab', `/${tabs[0].toLowerCase()}`);
 
 ---
 
