@@ -1,0 +1,224 @@
+---
+import TopBar from "../components/top-bar.astro"
+import Header from "../components/header.astro"
+import Bio from "../components/bio.astro"
+import Nav from "../components/nav.astro"
+import Footer from "../components/footer.astro"
+
+const tabs = ['Projects', 'Blog', 'About', 'Links'];
+const response = await fetch('https://rmperso-pb.fly.dev/api/collections/users/records?filter=(username = "raulmar")');
+const data = await response.json();
+const user = data.items[0];
+
+const currentYear = new Date().getFullYear();
+
+---
+
+<div #container class="container">
+  <div class="profile">
+    <TopBar/>
+    <Header cover={user.cover_img} profilePic={user.profile_img} username={user.username} title={user.job_title} collectionId={user.collectionId} userId={user.id}/>
+    <Bio description={user.bio} location={user.location} link={user.link} experience={user.experience}/>
+  </div>
+  <div class="vertical-divider"></div>
+  <div class="content">
+    <Nav tabs={tabs}/>
+    <div class="projects--grid-container">
+      <slot/>
+    </div>
+    <Footer>
+      { currentYear }
+    </Footer>
+  </div>
+</div>
+
+<!-- 
+<div (scroll)="onContentScroll($event)" #container class="container" *ngIf="$ready | async">
+  <div class="profile">
+    <rm-top-bar/>
+    <rm-header  />
+    <rm-bio  />
+  </div>
+  <div class="vertical-divider"></div>
+  <div #content (scroll)="onContentScroll($event)" class="content">
+    <rm-nav/>
+    <router-outlet></router-outlet>
+    <rm-footer  ></rm-footer>
+  </div>
+</div>
+<div *ngIf="showBackToTop" (click)="onBackToTopClick()" class="back-to-top">
+  <i class="fa-solid fa-chevron-up"></i>
+</div> -->
+
+<style is:global>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+body {
+  --main-bg-color: #fff;
+  --main-text-color: #420093;
+  --primary-color: #000;
+  --secondary-color: #666666;
+  --border-color: #d2d2d2;
+  --accent-color: #375461;
+  --container-color: #375461;
+  --font-weight-bold: 700;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --letter-spacing-xs: -0.04rem;
+  --letter-spacing-sm: -0.025rem;
+  --scrollbar-color: #d2d2d2;
+  --desktop-x-padding: 4rem;
+  --desktop-y-padding: 2.5rem;
+}
+
+body.dark-theme {
+  --main-bg-color: #000;
+  --secondary-color: #a9b3b6;
+  --container-color: #476c7c;
+  --border-color: #375461;
+  --accent-color: #fff;
+  --scrollbar-color: #666666;
+
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--border-color);
+}
+
+  .vertical-center {
+    display: flex;
+    align-items: center;
+  }
+
+  .about-content {
+  & h1, p {
+    font-family: 'Inter', sans-serif;
+    color: var(--secondary-color);
+  }
+  & p {
+    font-size: 1.3rem;
+  }
+  & img {
+    width: 90%;
+    height: auto;
+    border-radius: 0.5rem;
+  }
+  & p:has(img) {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0
+  }
+}
+</style>
+
+<style>
+	.container {
+  background-color: var(--main-bg-color);
+}
+
+@media (min-width: 480px) {
+  .container {
+    width: 960px;
+    margin: 0 auto;
+    padding: 0 calc(var(--desktop-x-padding) / 2) 0 var(--desktop-x-padding);
+    overflow-y: overlay;
+    position: relative;
+    display: flex;
+    gap: var(--desktop-x-padding);
+  }
+
+  .vertical-divider {
+    width: 1px;
+    height: calc(100vh - var(--desktop-y-padding) * 2);
+    background-color: var(--border-color);
+    margin: var(--desktop-y-padding) 0;
+  }
+
+  .profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 480px;
+  }
+
+  .content {
+    height: 100vh;
+    overflow-y: overlay;
+    width: 480px;
+    padding-right: calc(var(--desktop-x-padding) / 2);
+  }
+
+  .content::-webkit-scrollbar-track {
+    background-color: transparent;
+    margin: var(--desktop-x-padding) 0;
+  }
+
+  .content::-webkit-scrollbar {
+    width: 6px;
+    background-color: transparent;
+
+  }
+
+  .content::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-color);
+    border-radius: 10px;
+    visibility: hidden;
+
+  }
+
+  .content:hover::-webkit-scrollbar-thumb {
+    visibility: visible;
+  }
+}
+
+.vertical-center {
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  height: 100vh;
+  overflow-y: overlay;
+}
+
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  color: var(--main-bg-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  z-index: 1000;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+@media (min-width: 480px) {
+  .projects--grid-container {
+    margin: 0 !important;
+  }
+}
+
+.projects--grid-container {
+  display: grid;
+  max-width: 100%;
+  margin: 0 20px;
+  /* margin: 0; */
+}
+
+
+</style>

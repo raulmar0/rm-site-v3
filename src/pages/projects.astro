@@ -1,0 +1,39 @@
+---
+import ProfileLayout from "../layouts/profile-layout.astro"
+import Post from "../components/post.astro"
+
+const response = await fetch('https://rmperso-pb.fly.dev/api/collections/projects/records?sort=+created');
+const data = await response.json();
+const projects = data.items;
+
+// console.log(projects);
+
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+	</head>
+	<body>
+		<ProfileLayout>
+      { projects.map((project: any) => (
+        <Post
+          useServerUrl={true}
+          profilePic={project.profilepic}
+          title={project.title}
+          description={project.description}
+          thumbnail={project.thumbnail}
+          buttonsObj={{Demo: project.demo, Repo: project.repo}}
+          collectionId={project.collectionId}
+          id={project.id}
+        />
+      ))
+      }
+      <Post />
+    </ProfileLayout>
+	</body>
+</html>

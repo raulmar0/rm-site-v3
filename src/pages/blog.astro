@@ -1,0 +1,39 @@
+---
+import ProfileLayout from "../layouts/profile-layout.astro"
+import Post from "../components/post.astro"
+
+const response = await fetch('https://dev.to/api/articles?username=raulmar');
+const data = await response.json();
+const posts = data;
+
+console.log(posts);
+
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+	</head>
+	<body>
+
+		<ProfileLayout>
+      { posts.map((post: any) => (
+        <Post
+          profilePic={post.user.profile_image_90}
+          title={post.title}
+          description={post.description}
+          thumbnail={post.cover_image}
+          buttonsObj={{ 'Read More': post.url }}
+          url={post.url}
+          useServerUrl={false}
+        />
+      ))
+      }
+      <Post />
+    </ProfileLayout>
+	</body>
+</html>
