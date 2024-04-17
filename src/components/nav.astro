@@ -1,15 +1,5 @@
 ---
-const { tabs } = Astro.props;
-
-
-// const urlResult = Astro.url.pathname.match(/\/([^\/]+)$/);
-// const currentUrl = urlResult ? urlResult[1] : null;
-// console.log(Astro.url.pathname);
-// console.log(currentUrl);
-
-const currentUrl = await Astro.url.pathname;
-console.log('currentUrl', currentUrl);
-console.log('tab', `/${tabs[0].toLowerCase()}`);
+const { tabs, currentUrl } = Astro.props;
 
 ---
 
@@ -20,7 +10,7 @@ console.log('tab', `/${tabs[0].toLowerCase()}`);
         <li>
           <a 
           href={`/${tab.toLowerCase()}`}
-          class:list={{ active: currentUrl === `/${tab.toLowerCase()}` }}
+          class:list={{ active: currentUrl === `${tab.toLowerCase()}` }}
           >{tab}</a>
         </li>
       ))

@@ -10,7 +10,7 @@ const posts = data;
 
 ---
 
-<ProfileLayout>
+<ProfileLayout currentUrl="blog">
   { posts.map((post: any) => (
     <Post
       profilePic={post.user.profile_image_90}
@@ -23,5 +23,4 @@ const posts = data;
     />
   ))
   }
-  <Post />
 </ProfileLayout>

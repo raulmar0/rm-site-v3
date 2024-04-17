@@ -4,6 +4,9 @@ import Header from "../components/header.astro"
 import Bio from "../components/bio.astro"
 import Nav from "../components/nav.astro"
 import Footer from "../components/footer.astro"
+import { ViewTransitions } from "astro:transitions"
+
+const { currentUrl } = Astro.props;
 
 const tabs = ['Projects', 'Blog', 'About', 'Links'];
 const response = await fetch('https://rmperso-pb.fly.dev/api/collections/users/records?filter=(username = "raulmar")');
@@ -20,18 +23,19 @@ const currentYear = new Date().getFullYear();
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>raulmar</title>
+    <ViewTransitions />
 	</head>
 	<body>
     <div #container class="container">
-      <div class="profile">
+      <div class="profile" transition:persist>
         <TopBar/>
         <Header cover={user.cover_img} profilePic={user.profile_img} username={user.username} title={user.job_title} collectionId={user.collectionId} userId={user.id}/>
         <Bio description={user.bio} location={user.location} link={user.link} experience={user.experience}/>
       </div>
       <div class="vertical-divider"></div>
       <div class="content">
-        <Nav tabs={tabs}/>
-        <div class="projects--grid-container">
+        <Nav tabs={tabs} currentUrl={currentUrl}/>
+        <div class="projects--grid-container" transition:animate="slide">
           <slot/>
         </div>
         <Footer>
@@ -41,6 +45,33 @@ const currentYear = new Date().getFullYear();
     </div>
 	</body>
 </html>
+
+<script>
+  // document.body.addEventListener('load', (e) => {
+  //   if (localStorage.getItem('dark-theme') === 'enabled') {
+  //     document.body.classList.add('dark-theme');
+  //   } else {
+  //     document.body.classList.remove('dark-theme');
+  //   }
+  // });
+  const toggle = document.getElementById('color-mode') as HTMLInputElement;
+  if (toggle) {
+    if (localStorage.getItem('dark-theme') === 'enabled') {
+      document.body.classList.add('dark-theme');
+      toggle.checked = true;
+    }
+    toggle.addEventListener('click', (e) => {
+      // Your event listener code here
+      document.body.classList.toggle('dark-theme');
+      if (document.body.classList.contains('dark-theme')) {
+        localStorage.setItem('dark-theme', 'enabled');
+      } else {
+        localStorage.setItem('dark-theme', 'disabled');
+      }
+    });
+  }
+</script>
+
 
 <style is:global>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');

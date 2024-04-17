@@ -5,10 +5,9 @@ const response = await fetch('https://rmperso-pb.fly.dev/api/collections/users/r
 const data = await response.json();
 const user = data.items[0];
 
-// console.log(user.about);
 
 ---
 
-<ProfileLayout>
+<ProfileLayout currentUrl="about">
   <div class="about-content" set:html={user.about}></div>
 </ProfileLayout>

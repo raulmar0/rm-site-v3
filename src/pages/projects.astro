@@ -6,10 +6,8 @@ const response = await fetch('https://rmperso-pb.fly.dev/api/collections/project
 const data = await response.json();
 const projects = data.items;
 
-// console.log(projects);
-
 ---
-<ProfileLayout>
+<ProfileLayout currentUrl="projects">
   { projects.map((project: any) => (
     <Post
       useServerUrl={true}
@@ -23,5 +21,4 @@ const projects = data.items;
     />
   ))
   }
-  <Post />
 </ProfileLayout>
